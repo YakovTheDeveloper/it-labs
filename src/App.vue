@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import BaseButton from './components/common/BaseButton/BaseButton.vue';
-import BaseTypography from './components/common/BaseTypography/BaseTypography.vue';
-import BaseInput from './components/common/BaseInput/BaseInput.vue';
+import HomeView from '@/views/HomeView/HomeView.vue';
 </script>
 
 <template>
   <main>
-    <base-button variant="primary">
-      <base-typography>Hello</base-typography>
-    </base-button>
-    <base-input />
+    <home-view />
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+  padding: 24px 50px 50px;
+}
+</style>

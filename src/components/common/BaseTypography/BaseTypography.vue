@@ -5,14 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TypographyColor, TypographyFontFamily, TypographyVariant } from './types';
+import type { TypographyProps } from './types';
 import { computed } from 'vue';
 
-const props = withDefaults(defineProps<{
-    variant?: TypographyVariant
-    color?: TypographyColor
-    fontFamily?: TypographyFontFamily
-}>(), {
+const props = withDefaults(defineProps<TypographyProps>(), {
     color: 'primary',
     variant: 'body3',
     fontFamily: 'primary'
@@ -63,6 +59,14 @@ const baseClasses = computed(() => ([
 
 .color-inversed {
     color: var(--color-text-inversed);
+}
+
+.color-success {
+    color: var(--color-success);
+}
+
+.color-danger {
+    color: var(--color-danger);
 }
 
 .font-family-primary {

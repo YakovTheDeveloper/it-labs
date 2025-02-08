@@ -27,12 +27,19 @@
   --color-input-placeholder: var(--color-gray);
   --color-table-heading: var(--color-brown);
 
+  --color-success: var(--color-green-warm);
+  --color-danger: var(--color-red);
+
   --bg-color-button-primary: var(--color-green);
   --bg-color-button-secondary: var(--color-gray);
-  --bg-color-button-tertiary: var(--color-gray-light);
+  /* --bg-color-button-tertiary: var(--color-gray-light); */
+
+  --bg-color-tab-active: var(--color-gray-light);
 
   --border-radius-modal-content: var(--border-radius-m);
   --border-radius-button: var(--border-radius-s);
+
+  --border-color-table-heading: var(--color-gray-light-2);
 
   --box-shadow-input: var(--box-shadow);
   --box-shadow-button: var(--box-shadow);
