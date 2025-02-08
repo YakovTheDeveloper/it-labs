@@ -22,8 +22,21 @@
 :root {
   --color-background: var(--color-white);
   --color-text: var(--color-black);
+  --color-text-secondary: var(--color-brown);
+  --color-text-inversed: var(--color-white);
+  --color-input-placeholder: var(--color-gray);
+  --color-table-heading: var(--color-brown);
+
+  --bg-color-button-primary: var(--color-green);
+  --bg-color-button-secondary: var(--color-gray);
+  --bg-color-button-tertiary: var(--color-gray-light);
+
   --border-radius-modal-content: var(--border-radius-m);
   --border-radius-button: var(--border-radius-s);
+
+  --box-shadow-input: var(--box-shadow);
+  --box-shadow-button: var(--box-shadow);
+
 }
 
 body {
