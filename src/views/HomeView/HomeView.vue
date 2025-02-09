@@ -11,8 +11,8 @@
                 <visitors-count class="visitors-count" />
             </div>
         </layout-header>
-        <base-table :heading="tablePersonHeadings" :content="getFilteredPerson" />
-        <FilterPanel :options="filterState.options" :onTabSelect="setActiveFilter" :active="filterState.currentFilter"
+        <base-table :heading="tablePersonHeadings" :content="getFilteredPerson" class="person-table" />
+        <filter-panel :options="filterState.options" :onTabSelect="setActiveFilter" :active="filterState.currentFilter"
             class="filter-panel" />
     </div>
 </template>
@@ -38,12 +38,20 @@ const tablePersonHeadings = {
 </script>
 
 <style scoped>
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .header-content {
     display: flex;
     align-items: end;
     flex-grow: 1;
     flex-shrink: 0;
 }
+
+.person-table {}
 
 .name-search-input {
     width: 394px;
@@ -59,5 +67,6 @@ const tablePersonHeadings = {
 
 .filter-panel {
     margin-top: auto;
+    flex: 0;
 }
 </style>

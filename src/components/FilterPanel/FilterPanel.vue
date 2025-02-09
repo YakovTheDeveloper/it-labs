@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="filter-panel">
         <BaseTypography color="secondary" variant="label1">
             Фильтровать по
         </BaseTypography>
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <style scoped>
-.container {
+.filter-panel {
     display: flex;
     gap: 50px;
     align-items: center;

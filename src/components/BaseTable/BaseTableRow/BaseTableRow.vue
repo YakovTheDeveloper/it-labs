@@ -36,7 +36,9 @@ const getCellInnerElementProps = (key: string, value: any) => {
 </script>
 
 <style scoped>
-.row {}
+.row {
+    height: 10px;
+}
 
 .isHere {
     display: flex;
