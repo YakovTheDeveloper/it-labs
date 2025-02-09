@@ -1,17 +1,18 @@
 <template>
     <BaseModal id="add-person" v-bind="modalProps">
-        <PersonForm :onSuccess="personStore.addPerson" :onClose="closeModal" />
+        <PersonAddForm :onSuccess="addPersonHandler" />
     </BaseModal>
     <BaseModal id="edit-person" v-bind="modalProps">
-        <PersonForm :onSuccess="personStore.editPerson" :onClose="closeModal" />
+        <PersonEditForm :onSuccess="editPersonHandler" :initFormData="modalState.tempData.content" />
     </BaseModal>
 </template>
 
 <script setup lang="ts">
 
-import PersonForm from '@/components/forms/PersonForm/PersonForm.vue';
+import PersonAddForm from '@/components/forms/PersonAddForm.vue';
+import PersonEditForm from '@/components/forms/PersonEditForm.vue';
 import BaseModal from '@/components/Modal/BaseModal.vue';
-import { personStore } from '@/stores/usePersonStore';
+import { personStore, type Person } from '@/stores/usePersonStore';
 import { uiStore } from '@/stores/useUiStore/useUiStore';
 import { computed, watch } from 'vue';
 
@@ -24,9 +25,16 @@ const modalProps = computed(() => ({
     closeModal
 }))
 
-watch(() => modalState.currentModal, (data) => {
-    console.log(data)
-})
+const addPersonHandler = (data: Person) => {
+    personStore.addPerson(data)
+    closeModal()
+}
+
+const editPersonHandler = (data: Person) => {
+    personStore.editPerson(data)
+    closeModal()
+}
+
 
 </script>
 

@@ -1,19 +1,16 @@
 <template>
   <dialog ref="dialogElement" class="modal" :open="isOpen">
     <div class="modal-content">
-      <button @click="closeModalHandler" class="close-button">
-        <img :src="CrossIcon" alt="Logo" class="logo" draggable="false" />
-      </button>
-      <slot></slot>
+      <ButtonModalClose variant="icon" class="close-button" />
+      <slot v-if="isOpen"></slot>
     </div>
   </dialog>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from 'vue';
-import CrossIcon from '@/assets/icons/close-circle-icon.svg'
+import { computed, ref, watch } from 'vue';
 import type { ModalVariants } from '@/stores/useUiStore/useModalStore/useModalStore';
-import { useOutsideClick } from '@/composables/useOutsideClick';
+import ButtonModalClose from '@/components/common/BaseButton/ButtonModalClose/ButtonModalClose.vue';
 
 const props = defineProps<{
   id: ModalVariants
@@ -21,7 +18,7 @@ const props = defineProps<{
   closeModal: () => void
 }>();
 
-const emit = defineEmits(['close']);
+// const emit = defineEmits(['close']);
 
 const dialogElement = ref<HTMLDialogElement | null>(null);
 
@@ -38,13 +35,6 @@ watch(
   },
   { immediate: true },
 );
-
-
-const closeModalHandler = () => {
-  props.closeModal()
-  emit('close');
-};
-
 
 </script>
 
@@ -75,15 +65,6 @@ const closeModalHandler = () => {
 }
 
 .close-button {
-  display: flex;
   margin-left: auto;
-
-  &:hover {
-    opacity: 0.9;
-  }
-}
-
-.logo {
-  user-select: none;
 }
 </style>

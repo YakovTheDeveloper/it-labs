@@ -53,34 +53,15 @@ function usePersonStore() {
         })
     });
 
-    // const visitorsCount = computed(() => {
-    //     const count = {
-    //         here: 0,
-    //         notHere: 0,
-    //     };
-
-    //     personState.content.forEach(person => {
-    //         if (person.isHere) {
-    //             count.here++;
-    //         } else {
-    //             count.notHere++;
-    //         }
-    //     });
-
-    //     return count;
-    // });
-
-
     const addPerson = (person: Person) => {
         personState.content.push(person);
     };
 
     const editPerson = (person: Person) => {
-        let exactPerson = personState.content.find(({ id }) => id === person.id)
-        if (!exactPerson) return
-        exactPerson = { ...person }
+        const index = personState.content.findIndex(({ id }) => id === person.id);
+        if (index === -1) return;
+        personState.content[index] = { ...person };
     };
-
 
     return {
         personState,

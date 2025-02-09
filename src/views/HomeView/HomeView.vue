@@ -2,7 +2,7 @@
     <div class="container">
         <layout-header>
             <div class="header-content">
-                <base-input class="name-search-input" placeholder="Поиск по имени" />
+                <base-input class="name-search-input" placeholder="Поиск по имени" v-model="nameFilterState.current" />
                 <base-button class="add-button" @click="openModal('add-person')">
                     <base-typography color="inversed" variant="body2">
                         Добавить
@@ -11,9 +11,10 @@
                 <visitors-count class="visitors-count" />
             </div>
         </layout-header>
-        <base-table :heading="tablePersonHeadings" :content="getFilteredPerson" class="person-table" />
-        <filter-panel :options="filterState.options" :onTabSelect="setActiveFilter" :active="filterState.currentFilter"
-            class="filter-panel" />
+        <base-table :heading="tablePersonHeadings" :content="getFilteredPerson" class="person-table"
+            :onRowClick="onTableRowClick" />
+        <filter-panel :options="presenceFilterState.options" :onTabSelect="setPresenceFilter"
+            :active="presenceFilterState.current" class="filter-panel" />
     </div>
 </template>
 
@@ -27,8 +28,9 @@ import BaseTable from '@/components/BaseTable/BaseTable.vue';
 import FilterPanel from '@/components/FilterPanel/FilterPanel.vue';
 import { personFilterStore } from '@/stores/usePersonFilterStore';
 import { uiStore } from '@/stores/useUiStore/useUiStore';
+import type { Person } from '@/stores/usePersonStore';
 
-const { filterState, getFilteredPerson, setActiveFilter } = personFilterStore
+const { presenceFilterState, setNameFilter, getFilteredPerson, setPresenceFilter, nameFilterState } = personFilterStore
 const tablePersonHeadings = {
     id: 'Номер',
     name: 'ФИО',
@@ -36,7 +38,12 @@ const tablePersonHeadings = {
     group: 'Группа',
     isHere: 'Присутствие'
 }
-const { modalStore: { openModal } } = uiStore
+const { modalStore: { openModal, setTempData } } = uiStore
+
+const onTableRowClick = (content: Person) => {
+    setTempData({ currentModal: 'edit-person', content: { ...content } })
+    openModal('edit-person')
+}
 </script>
 
 <style scoped>

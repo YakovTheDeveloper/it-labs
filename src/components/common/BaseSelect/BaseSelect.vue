@@ -6,7 +6,7 @@
         <!-- <BaseInput placeholder="" :value="heading" class='heading-input' /> -->
         <ul v-if="isOpen" class="dropdown">
             <li v-for="({ label, value }) in props.options" :key="value" class="dropdown-option"
-                @click.stop="onSelectHandler(value)">
+                @click.stop="handleSelect(value)">
                 {{ label }}
             </li>
         </ul>
@@ -14,16 +14,23 @@
 </template>
 
 <script setup lang="ts">
-import BaseInput from '@/components/common/BaseInput/BaseInput.vue';
 import type { SelectOption } from '@/components/common/BaseSelect/types';
 import { useOutsideClick } from '@/composables/useOutsideClick';
 import { computed, ref, watch } from 'vue';
 
 const props = defineProps<{
     options: SelectOption[]
-    value: string
-    onSelect: (value: string) => void
+    modelValue: string;
 }>()
+
+const emit = defineEmits<{
+    (event: 'update:modelValue', value: string): void;
+}>();
+
+const handleSelect = (value: string) => {
+    emit('update:modelValue', value);
+    close()
+};
 
 const containerRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false)
@@ -35,19 +42,11 @@ const close = () => {
     isOpen.value = false
 }
 
-const test = () => alert('wtof')
-
-
-const onSelectHandler = (value: string) => {
-    props.onSelect(value)
-    close()
-}
-
 const getOptionLabelByValue = (value: string) => {
     return props.options.find((option) => option.value === value)?.label || ''
 }
 
-const heading = computed(() => props.value ? getOptionLabelByValue(props.value) : 'Выбрать')
+const heading = computed(() => props.modelValue ? getOptionLabelByValue(props.modelValue) : 'Выбрать')
 
 watch(isOpen, (value) => console.log(value))
 

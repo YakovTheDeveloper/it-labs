@@ -4,39 +4,63 @@ import type { FilterOptions } from '@/components/FilterPanel/types';
 import { personStore, type PersonState } from '@/stores/usePersonStore';
 import { computed, reactive } from 'vue';
 
-type FilterState = {
-    currentFilter: string;
+type PresenceFilterState = {
+    current: string;
     options: FilterOptions
 };
 
+type NameFilterState = {
+    current: string;
+};
+
+
 function usePersonFilterStore(personState: PersonState) {
 
-    const filteringOptions: FilterOptions = [
+    const isHereFilteringOptions: FilterOptions = [
         { label: 'Отсутствующим', value: 'absent' },
         { label: 'Присутствующим', value: 'present' },
         { label: 'Без фильтра', value: 'unset' },
     ]
 
-    const filterState: FilterState = reactive({
-        currentFilter: 'unset',
-        options: filteringOptions
+    const nameFilterState: NameFilterState = reactive({
+        current: '',
     });
 
-    const setActiveFilter = (value: string) => {
-        filterState.currentFilter = value;
+    const presenceFilterState: PresenceFilterState = reactive({
+        current: 'unset',
+        options: isHereFilteringOptions
+    });
+
+
+    const setNameFilter = (value: string) => {
+        nameFilterState.current = value
+    }
+
+    const setPresenceFilter = (value: string) => {
+        presenceFilterState.current = value;
     };
 
     const getFilteredPerson = computed(() => {
-        return personState.content.filter(({ isHere }) => {
-            if (filterState.currentFilter === 'absent') return !isHere
-            if (filterState.currentFilter === 'present') return isHere
-            return true
-        })
-    })
+        return personState.content.filter(person => {
+            const nameMatch = nameFilterState.current
+                ? person.name.toLowerCase().includes(nameFilterState.current.toLowerCase())
+                : true;
 
+            let presenceMatch = true;
+            if (presenceFilterState.current === 'absent') {
+                presenceMatch = !person.isHere;
+            } else if (presenceFilterState.current === 'present') {
+                presenceMatch = person.isHere;
+            }
+
+            return nameMatch && presenceMatch;
+        });
+    });
     return {
-        filterState,
-        setActiveFilter,
+        nameFilterState,
+        presenceFilterState,
+        setPresenceFilter,
+        setNameFilter,
         getFilteredPerson
     }
 

@@ -8,20 +8,20 @@
             </BaseTableCell>
         </thead>
         <tbody>
-            <BaseTableRow v-for="(data, idx) in props.content" :content="data" :key="idx" />
+            <BaseTableRow v-for="(data, idx) in props.content" :content="data" :key="idx" @click="onRowClick(data)" />
         </tbody>
     </table>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends object">
 import BaseTableCell from '@/components/BaseTable/BaseTableCell/BaseTableCell.vue';
 import BaseTableRow from '@/components/BaseTable/BaseTableRow/BaseTableRow.vue';
-import type { TableContent } from '@/components/BaseTable/types';
 import BaseTypography from '@/components/common/BaseTypography/BaseTypography.vue';
 
 const props = defineProps<{
-    content: TableContent[]
-    heading: TableContent
+    content: T[]
+    heading: Record<string, string>
+    onRowClick: (data: T) => void
 }>()
 </script>
 

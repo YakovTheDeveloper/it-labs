@@ -1,7 +1,7 @@
 <template>
     <div class="input-container">
         <input class="input" placeholder="Enter text..." v-bind="attrs" :value="props.modelValue"
-            @change="handleChange" />
+            @input="handleChange" />
     </div>
 </template>
 
