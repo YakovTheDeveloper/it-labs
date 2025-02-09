@@ -26,7 +26,7 @@ const baseClasses = computed(() => ([
     font-size: 16px;
 }
 
-.button {
+.body2 {
     font-size: 24px;
 }
 

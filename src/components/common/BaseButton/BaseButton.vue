@@ -1,5 +1,5 @@
 <template>
-    <button :class="baseClasses">
+    <button :class="baseClasses" type="button">
         <slot></slot>
     </button>
 </template>
@@ -27,11 +27,17 @@ const baseClasses = computed(() => ([
     border-top-left-radius: 11px 5px;
     border-bottom-right-radius: 11px 5px;
     border-bottom-left-radius: 11px 5px;
+    padding: 13px 19px;
     min-width: 273px;
+
+    transition: var(--transition-box-shadow);
+
+    &:hover {
+        box-shadow: none;
+    }
 }
 
 .primary {
-    padding: 13px 19px;
     background-color: var(--bg-color-button-primary);
 }
 

@@ -5,13 +5,13 @@
         </base-typography>
         <span class="visitor-count">
             <base-typography variant="label1" color="success">
-                280
+                {{ personState.visitorsCount.here }}
             </base-typography>
             <base-typography variant="label1" color="secondary" class="visitor-count-separator">
                 /
             </base-typography>
             <base-typography variant="label1" color="danger">
-                35
+                {{ personState.visitorsCount.notHere }}
             </base-typography>
         </span>
     </div>
@@ -19,7 +19,8 @@
 
 <script setup lang="ts">
 import BaseTypography from '@/components/common/BaseTypography/BaseTypography.vue';
-
+import { personStore } from '@/stores/usePersonStore';
+const { personState } = personStore
 </script>
 
 <style scoped>

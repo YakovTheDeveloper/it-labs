@@ -17,6 +17,8 @@
   --border-radius-m: 30px;
 
   --box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --transition-box-shadow: box-shadow 0.1s;
+
 }
 
 /* semantic color variables for this project */
@@ -34,6 +36,7 @@
 
   --bg-color-button-primary: var(--color-green);
   --bg-color-button-secondary: var(--color-gray);
+  --bg-color-select-option: var(--color-gray-light-2);
   /* --bg-color-button-tertiary: var(--color-gray-light); */
 
   --bg-color-tab-active: var(--color-gray-light);
@@ -43,18 +46,18 @@
 
   --border-color-table-heading: var(--color-gray-light-2);
   --border-color-checkbox: var(--color-gray-2);
+  --border-color-select-option: var(--color-gray-light-2);
 
   --box-shadow-input: var(--box-shadow);
   --box-shadow-button: var(--box-shadow);
+
 
 }
 
 body {
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  transition: color 0.5s, background-color 0.5s;
   font-family:
     'Open Sans',
     Inter,

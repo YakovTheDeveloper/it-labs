@@ -3,8 +3,8 @@
         <layout-header>
             <div class="header-content">
                 <base-input class="name-search-input" placeholder="Поиск по имени" />
-                <base-button class="add-button">
-                    <base-typography color="inversed">
+                <base-button class="add-button" @click="openModal('add-person')">
+                    <base-typography color="inversed" variant="body2">
                         Добавить
                     </base-typography>
                 </base-button>
@@ -26,15 +26,17 @@ import VisitorsCount from '@/components/VisitorsCount.vue';
 import BaseTable from '@/components/BaseTable/BaseTable.vue';
 import FilterPanel from '@/components/FilterPanel/FilterPanel.vue';
 import { personFilterStore } from '@/stores/usePersonFilterStore';
+import { uiStore } from '@/stores/useUiStore/useUiStore';
 
 const { filterState, getFilteredPerson, setActiveFilter } = personFilterStore
 const tablePersonHeadings = {
-    num: 'Номер',
+    id: 'Номер',
     name: 'ФИО',
     company: 'Компания',
     group: 'Группа',
     isHere: 'Присутствие'
 }
+const { modalStore: { openModal } } = uiStore
 </script>
 
 <style scoped>

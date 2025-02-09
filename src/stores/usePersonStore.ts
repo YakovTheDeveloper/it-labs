@@ -1,7 +1,7 @@
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 
-type Person = {
-    num: number;
+export type Person = {
+    id: number;
     name: string;
     company: string;
     group: string;
@@ -10,37 +10,82 @@ type Person = {
 
 export type PersonState = {
     content: Person[];
+    visitorsCount: {
+        here: number;
+        notHere: number;
+    }
 };
 
-export function usePersonStore() {
+function usePersonStore() {
 
     const personState: PersonState = reactive({
         content: [
             {
-                num: 1,
+                id: 1,
                 name: 'Зубенко Михаил Петрович',
                 company: 'ООО “АСОЛЬ”',
                 group: 'Партнер',
                 isHere: true,
             },
             {
-                num: 2,
+                id: 2,
                 name: 'Зубенко Михаил Петрович',
                 company: 'ООО “АСОЛЬ”',
                 group: 'Прохожий',
                 isHere: false,
             },
         ],
+        visitorsCount: computed(() => {
+            const count = {
+                here: 0,
+                notHere: 0,
+            };
+
+            personState.content.forEach(person => {
+                if (person.isHere) {
+                    count.here++;
+                } else {
+                    count.notHere++;
+                }
+            });
+
+            return count;
+        })
     });
+
+    // const visitorsCount = computed(() => {
+    //     const count = {
+    //         here: 0,
+    //         notHere: 0,
+    //     };
+
+    //     personState.content.forEach(person => {
+    //         if (person.isHere) {
+    //             count.here++;
+    //         } else {
+    //             count.notHere++;
+    //         }
+    //     });
+
+    //     return count;
+    // });
 
 
     const addPerson = (person: Person) => {
         personState.content.push(person);
     };
 
+    const editPerson = (person: Person) => {
+        let exactPerson = personState.content.find(({ id }) => id === person.id)
+        if (!exactPerson) return
+        exactPerson = { ...person }
+    };
+
+
     return {
         personState,
         addPerson,
+        editPerson
     };
 }
 

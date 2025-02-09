@@ -1,12 +1,26 @@
 <template>
     <div class="input-container">
-        <input class="input" placeholder="Enter text..." v-bind="attrs" />
+        <input class="input" placeholder="Enter text..." v-bind="attrs" :value="props.modelValue"
+            @change="handleChange" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useAttrs } from 'vue';
 const attrs = useAttrs();
+
+const props = defineProps<{
+    modelValue: string
+}>()
+
+const emit = defineEmits<{
+    (event: 'update:modelValue', value: string): void;
+}>()
+
+const handleChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    emit('update:modelValue', target.value);
+};
 </script>
 
 <style scoped>

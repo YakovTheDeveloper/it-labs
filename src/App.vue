@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import PersonModal from '@/components/Modal/PersonModal/PersonModal.vue';
+import ModalRoot from '@/components/Modal/ModalRoot.vue';
 import HomeView from '@/views/HomeView/HomeView.vue';
 </script>
 
 <template>
   <main>
     <home-view />
-    <PersonModal />
+    <ModalRoot />
   </main>
 </template>
 
