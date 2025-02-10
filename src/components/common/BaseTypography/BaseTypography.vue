@@ -10,7 +10,7 @@ import { computed } from 'vue';
 
 const props = withDefaults(defineProps<TypographyProps>(), {
     color: 'primary',
-    variant: 'body3',
+    variant: 'body1',
     fontFamily: 'primary'
 })
 

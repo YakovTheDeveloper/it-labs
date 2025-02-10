@@ -1,8 +1,8 @@
 <template>
     <label class="form-row">
-        <BaseTypography variant="label2" color="secondary">
+        <base-typography variant="label2" color="secondary">
             {{ props.label }}
-        </BaseTypography>
+        </base-typography>
         <slot></slot>
     </label>
 </template>

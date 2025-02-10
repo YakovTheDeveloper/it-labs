@@ -1,18 +1,20 @@
 <template>
-    <div class="container">
+    <div class="home-view-container">
         <layout-header>
             <div class="header-content">
                 <base-input class="name-search-input" placeholder="Поиск по имени" v-model="nameFilterState.current" />
                 <base-button class="add-button" @click="openModal('add-person')">
-                    <base-typography color="inversed" variant="body2">
+                    <base-typography color="inversed" variant="body2" fontFamily="secondary">
                         Добавить
                     </base-typography>
                 </base-button>
                 <visitors-count class="visitors-count" />
             </div>
         </layout-header>
-        <base-table :heading="tablePersonHeadings" :content="getFilteredPerson" class="person-table"
-            :onRowClick="onTableRowClick" />
+        <section class="main-content">
+            <base-table :columns="tablePersonColumns" :content="getFilteredPerson" class="person-table"
+                :onRowClick="onTableRowClick" />
+        </section>
         <filter-panel :options="presenceFilterState.options" :onTabSelect="setPresenceFilter"
             :active="presenceFilterState.current" class="filter-panel" />
     </div>
@@ -30,8 +32,8 @@ import { personFilterStore } from '@/stores/usePersonFilterStore';
 import { uiStore } from '@/stores/useUiStore/useUiStore';
 import type { Person } from '@/stores/usePersonStore';
 
-const { presenceFilterState, setNameFilter, getFilteredPerson, setPresenceFilter, nameFilterState } = personFilterStore
-const tablePersonHeadings = {
+const { presenceFilterState, getFilteredPerson, setPresenceFilter, nameFilterState } = personFilterStore
+const tablePersonColumns = {
     id: 'Номер',
     name: 'ФИО',
     company: 'Компания',
@@ -47,10 +49,12 @@ const onTableRowClick = (content: Person) => {
 </script>
 
 <style scoped>
-.container {
-    flex: 1;
+.home-view-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    max-height: 100%;
+    width: 100%;
 }
 
 .header-content {
@@ -60,7 +64,10 @@ const onTableRowClick = (content: Person) => {
     flex-shrink: 0;
 }
 
-.person-table {}
+.main-content {
+    overflow-y: auto;
+    flex-grow: 1;
+}
 
 .name-search-input {
     width: 394px;

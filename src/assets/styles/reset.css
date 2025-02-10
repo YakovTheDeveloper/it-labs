@@ -69,7 +69,8 @@ table {
 }
 
 :focus {
-    outline: none;
+    outline: 1px solid var(--outline-color);
+    outline-offset: 0px;
 }
 
 article,

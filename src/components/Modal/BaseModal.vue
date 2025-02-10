@@ -1,16 +1,15 @@
 <template>
-  <dialog ref="dialogElement" class="modal" :open="isOpen">
-    <div class="modal-content">
-      <ButtonModalClose variant="icon" class="close-button" />
-      <slot v-if="isOpen"></slot>
-    </div>
+  <dialog ref="dialogElement" class="modal" @keydown="handleKeydown">
+    <base-modal-content class="modal-content" v-if="isOpen">
+      <slot></slot>
+    </base-modal-content>
   </dialog>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { ModalVariants } from '@/stores/useUiStore/useModalStore/useModalStore';
-import ButtonModalClose from '@/components/common/BaseButton/ButtonModalClose/ButtonModalClose.vue';
+import BaseModalContent from '@/components/Modal/BaseModalContent.vue';
 
 const props = defineProps<{
   id: ModalVariants
@@ -18,14 +17,13 @@ const props = defineProps<{
   closeModal: () => void
 }>();
 
-// const emit = defineEmits(['close']);
-
 const dialogElement = ref<HTMLDialogElement | null>(null);
 
 const isOpen = computed(() => props.id === props.currentModalId)
 
+
 watch(
-  () => isOpen,
+  () => isOpen.value,
   (isOpen) => {
     if (isOpen) {
       dialogElement.value?.showModal();
@@ -36,6 +34,15 @@ watch(
   { immediate: true },
 );
 
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    event.preventDefault()
+  }
+  if (event.key === 'Escape') {
+    props.closeModal()
+  }
+};
+
 </script>
 
 <style scoped>
@@ -45,7 +52,6 @@ watch(
   top: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
-
   border: none;
   border-radius: var(--border-radius-modal-content);
   padding: 0;
@@ -57,14 +63,6 @@ watch(
 }
 
 .modal::backdrop {
-  background-color: rgba(0, 0, 0, 1);
-}
-
-.modal-content {
-  padding: 20px 20px 53px;
-}
-
-.close-button {
-  margin-left: auto;
+  background-color: var(--bg-color-backdrop);
 }
 </style>

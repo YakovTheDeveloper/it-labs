@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <img :src="Logo" alt="Logo" class="logo" />
+        <img :src="Logo" alt="Logo" class="logo" draggable="false" />
         <slot></slot>
     </header>
 </template>
@@ -16,5 +16,6 @@ import Logo from '@/assets/logo.svg'
 
 .logo {
     margin-right: 32px;
+    max-height: 90px;
 }
 </style>

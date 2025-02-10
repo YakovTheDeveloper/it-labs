@@ -6,7 +6,7 @@ import HomeView from '@/views/HomeView/HomeView.vue';
 <template>
   <main>
     <home-view />
-    <ModalRoot />
+    <modal-root />
   </main>
 </template>
 
@@ -14,6 +14,6 @@ import HomeView from '@/views/HomeView/HomeView.vue';
 main {
   display: flex;
   flex-grow: 1;
-  padding: 24px 50px 50px;
+  padding: 24px 50px 40px;
 }
 </style>

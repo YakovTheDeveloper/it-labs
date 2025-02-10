@@ -1,9 +1,9 @@
 <template>
-    <BaseButton variant="secondary" @click="closeModal" v-if="isDefault">
-        <BaseTypography variant="body2" font-family="secondary" color="inversed">
+    <base-button variant="secondary" @click="closeModal" v-if="isDefault">
+        <base-typography variant="body2" font-family="secondary" color="inversed">
             Закрыть
-        </BaseTypography>
-    </BaseButton>
+        </base-typography>
+    </base-button>
     <button @click="closeModal" class="icon-button" v-else>
         <img :src="CrossIcon" alt="Logo" class="logo" draggable="false" />
     </button>

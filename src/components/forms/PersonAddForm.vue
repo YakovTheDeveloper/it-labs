@@ -1,26 +1,26 @@
 <template>
-    <BaseForm @submit.prevent="handleSubmit">
-        <FormRow label="ФИО">
-            <BaseInput placeholder="" v-model="formData.name" />
-        </FormRow>
-        <FormRow label="Компания">
-            <BaseInput placeholder="" v-model="formData.company" />
-        </FormRow>
-        <FormRow label="Группа">
-            <BaseSelect :options="selectOptionsGroup" v-model="formData.group" />
-        </FormRow>
-        <FormRow label="Присутствие">
-            <BaseCheckbox v-model="formData.isHere" />
-        </FormRow>
-        <FormRowActions>
-            <BaseButton variant="primary" type="submit">
-                <BaseTypography variant="body2" font-family="secondary" color="inversed">
+    <base-form @submit.prevent="handleSubmit">
+        <form-row label="ФИО">
+            <base-input placeholder="" v-model="formData.name" />
+        </form-row>
+        <form-row label="Компания">
+            <base-input placeholder="" v-model="formData.company" />
+        </form-row>
+        <form-row label="Группа">
+            <base-select :options="selectOptionsGroup" v-model="formData.group" />
+        </form-row>
+        <form-row label="Присутствие">
+            <base-checkbox v-model="formData.isHere" />
+        </form-row>
+        <form-row-actions>
+            <base-button variant="primary" type="submit">
+                <base-typography variant="body2" font-family="secondary" color="inversed">
                     Добавить
-                </BaseTypography>
-            </BaseButton>
-            <ButtonModalClose />
-        </FormRowActions>
-    </BaseForm>
+                </base-typography>
+            </base-button>
+            <button-modal-close />
+        </form-row-actions>
+    </base-form>
 </template>
 
 <script setup lang="ts">
@@ -46,7 +46,7 @@ const props = defineProps<{
 const getInitialFormData = (): Person => {
     if (props.initFormData) return props.initFormData
     return {
-        id: Math.random(),
+        id: -1,
         name: '',
         company: '',
         group: '',

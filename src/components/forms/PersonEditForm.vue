@@ -1,26 +1,26 @@
 <template>
-    <BaseForm @submit.prevent="handleSubmit" v-if="formData">
-        <FormRow label="ФИО">
-            <BaseInput placeholder="" v-model="formData.name" />
-        </FormRow>
-        <FormRow label="Компания">
-            <BaseInput placeholder="" v-model="formData.company" />
-        </FormRow>
-        <FormRow label="Группа">
-            <BaseSelect :options="selectOptionsGroup" v-model="formData.group" />
-        </FormRow>
-        <FormRow label="Присутствие">
-            <BaseCheckbox v-model="formData.isHere" />
-        </FormRow>
-        <FormRowActions>
-            <BaseButton variant="primary" type="submit">
-                <BaseTypography variant="body2" font-family="secondary" color="inversed">
+    <base-form @submit.prevent="handleSubmit" v-if="formData">
+        <form-row label="ФИО">
+            <base-input placeholder="" v-model="formData.name" />
+        </form-row>
+        <form-row label="Компания">
+            <base-input placeholder="" v-model="formData.company" />
+        </form-row>
+        <form-row label="Группа">
+            <base-select :options="selectOptionsGroup" v-model="formData.group" />
+        </form-row>
+        <form-row label="Присутствие">
+            <base-checkbox v-model="formData.isHere" />
+        </form-row>
+        <form-row-actions>
+            <base-button variant="primary" type="submit">
+                <base-typography variant="body2" font-family="secondary" color="inversed">
                     Подтвердить изменения
-                </BaseTypography>
-            </BaseButton>
-            <ButtonModalClose />
-        </FormRowActions>
-    </BaseForm>
+                </base-typography>
+            </base-button>
+            <button-modal-close />
+        </form-row-actions>
+    </base-form>
 </template>
 
 <script setup lang="ts">
@@ -35,7 +35,7 @@ import { selectOptionsGroup } from '@/components/forms/common/data';
 import FormRow from '@/components/forms/common/FormRow.vue';
 import FormRowActions from '@/components/forms/common/FormRowActions.vue';
 import type { Person } from '@/stores/usePersonStore';
-import { computed, onUnmounted, reactive, watch } from 'vue';
+import { computed, reactive, watch } from 'vue';
 
 
 const props = defineProps<{
@@ -56,13 +56,10 @@ const getInitialFormData = computed(() => {
 })
 const formData = reactive<Person>(getInitialFormData.value)
 
-// const updateForm = (newState: Person) => Object.assign(formData, newState);
-
 watch(() => formData, (initFormData) => {
     console.log('watch', initFormData)
 
 })
-
 
 const handleSubmit = () => {
     props.onSuccess({ ...formData })

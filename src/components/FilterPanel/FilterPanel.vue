@@ -1,13 +1,13 @@
 <template>
     <div class="filter-panel">
-        <BaseTypography color="secondary" variant="label1">
+        <base-typography color="secondary" variant="label1">
             Фильтровать по
-        </BaseTypography>
+        </base-typography>
         <div class="tabs">
-            <BaseTab v-for="{ label, value } in props.options" :key="value" @click="onTabSelect(value)"
+            <base-tab v-for="{ label, value } in props.options" :key="value" @click="onTabSelect(value)"
                 :isActive="props.active === value">
                 {{ label }}
-            </BaseTab>
+            </base-tab>
         </div>
     </div>
 </template>
@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<{
     onTabSelect: (value: string) => void
 }>(), {
     active: '',
-    options: []
 })
 
 </script>
@@ -33,6 +32,7 @@ const props = withDefaults(defineProps<{
     display: flex;
     gap: 50px;
     align-items: center;
+    padding-top: 7px;
 }
 
 .tabs {

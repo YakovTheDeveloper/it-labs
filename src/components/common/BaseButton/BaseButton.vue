@@ -1,11 +1,11 @@
 <template>
-    <button :class="baseClasses" type="button">
+    <button :class="baseClasses" type="button" @click="handleClick" @focus="isFocused = true" @blur="isFocused = false">
         <slot></slot>
     </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { ButtonVariant } from './types';
 
 const props = withDefaults(defineProps<{
@@ -14,10 +14,17 @@ const props = withDefaults(defineProps<{
     variant: 'primary'
 });
 
+const isFocused = ref(false);
+
+const emit = defineEmits(['click']);
+
 const baseClasses = computed(() => ([
     'button',
     props.variant,
-]))
+]));
+
+const handleClick = () => emit('click');
+
 </script>
 
 <style scoped>
@@ -34,6 +41,12 @@ const baseClasses = computed(() => ([
 
     &:hover {
         box-shadow: none;
+    }
+
+    &:focus,
+    &:active {
+        outline: 2px solid var(--outline-color);
+        outline-offset: 2px;
     }
 }
 

@@ -1,10 +1,10 @@
 <template>
     <tr class="row">
-        <BaseTableCell v-for="(value, key) in props.content" :key="key" :class="key">
+        <base-table-cell v-for="(value, key) in props.content" :key="key" :name="key as string">
             <component :is="getCellInnerElement(key as string)" v-bind="getCellInnerElementProps(key as string, value)">
                 {{ value }}
             </component>
-        </BaseTableCell>
+        </base-table-cell>
     </tr>
 </template>
 
@@ -12,7 +12,7 @@
 import BaseTableCell from '@/components/BaseTable/BaseTableCell/BaseTableCell.vue';
 import BaseTypography from '@/components/common/BaseTypography/BaseTypography.vue';
 import type { TypographyProps } from '@/components/common/BaseTypography/types';
-import Indicator from '@/components/Indicator.vue';
+import PersonPresenceStatus from '@/components/PersonPresenceStatus.vue';
 
 const props = defineProps<{
     content: T
@@ -20,7 +20,7 @@ const props = defineProps<{
 }>()
 
 const getCellInnerElement = (key: string) => {
-    if (key === 'isHere') return Indicator
+    if (key === 'isHere') return PersonPresenceStatus
     return BaseTypography
 }
 const getCellInnerElementProps = (key: string, value: unknown) => {
@@ -42,11 +42,5 @@ const getCellInnerElementProps = (key: string, value: unknown) => {
     &:hover {
         opacity: 0.6;
     }
-}
-
-.isHere {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 </style>

@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue';
+import { computed, reactive, watch } from 'vue';
 
 export type Person = {
     id: number;
@@ -16,44 +16,54 @@ export type PersonState = {
     }
 };
 
+const INIT_STATE_CONTENT = [
+    {
+        id: 1,
+        name: 'Зубенко Михаил Петрович',
+        company: 'ООО “АСОЛЬ”',
+        group: 'Партнер',
+        isHere: true,
+    },
+    {
+        id: 2,
+        name: 'Зубенко Михаил Петрович',
+        company: 'ООО “АСОЛЬ”',
+        group: 'Прохожий',
+        isHere: false,
+    },
+]
+
 function usePersonStore() {
+    const loadStateFromLocalStorage = (): Person[] | null => {
+        const savedState = localStorage.getItem('personState');
+        if (savedState) {
+            try {
+                const parsedState = JSON.parse(savedState);
+                return parsedState.content || [];
+            } catch (error) {
+                console.error('Failed to parse localStorage data:', error);
+            }
+        }
+        return null
+    };
+
+    const saveStateToLocalStorage = () => {
+        try {
+            localStorage.setItem('personState', JSON.stringify({ content: personState.content }));
+        } catch (error) {
+            console.error('Failed to save state to localStorage:', error);
+        }
+    };
 
     const personState: PersonState = reactive({
-        content: [
-            {
-                id: 1,
-                name: 'Зубенко Михаил Петрович',
-                company: 'ООО “АСОЛЬ”',
-                group: 'Партнер',
-                isHere: true,
-            },
-            {
-                id: 2,
-                name: 'Зубенко Михаил Петрович',
-                company: 'ООО “АСОЛЬ”',
-                group: 'Прохожий',
-                isHere: false,
-            },
-        ],
+        content: loadStateFromLocalStorage() || INIT_STATE_CONTENT,
         visitorsCount: computed(() => {
-            const count = {
-                here: 0,
-                notHere: 0,
-            };
-
-            personState.content.forEach(person => {
-                if (person.isHere) {
-                    count.here++;
-                } else {
-                    count.notHere++;
-                }
-            });
-
-            return count;
+            return calculateVisitorsCount(personState.content)
         })
     });
 
     const addPerson = (person: Person) => {
+        person.id = getNextId()
         personState.content.push(person);
     };
 
@@ -63,10 +73,37 @@ function usePersonStore() {
         personState.content[index] = { ...person };
     };
 
+    const getNextId = () => {
+        if (personState.content.length === 0) return 1;
+        const maxId = Math.max(...personState.content.map(person => person.id));
+        return maxId + 1;
+    };
+
+    const calculateVisitorsCount = (content: Person[]) => {
+        const count = { here: 0, notHere: 0 };
+        content.forEach(person => {
+            if (person.isHere) {
+                count.here++;
+            } else {
+                count.notHere++;
+            }
+        });
+        return count;
+    };
+
+    watch(
+        () => personState.content,
+        () => {
+            saveStateToLocalStorage();
+        },
+        { deep: true }
+    );
+
     return {
         personState,
         addPerson,
-        editPerson
+        editPerson,
+        getNextId
     };
 }
 

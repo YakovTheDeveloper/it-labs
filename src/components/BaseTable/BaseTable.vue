@@ -1,14 +1,17 @@
 <template>
     <table class="table">
-        <thead>
-            <BaseTableCell v-for="(heading, key) in props.heading" :key="key" is-heading>
-                <base-typography variant="table-heading" color="secondary">
-                    {{ heading }}
-                </base-typography>
-            </BaseTableCell>
+        <thead class="table-head">
+            <tr>
+                <base-table-cell v-for="(columnName, key) in props.columns" :key="key" is-heading class="cell-heading"
+                    :name="key">
+                    <base-typography variant="table-heading" color="secondary">
+                        {{ columnName }}
+                    </base-typography>
+                </base-table-cell>
+            </tr>
         </thead>
-        <tbody>
-            <BaseTableRow v-for="(data, idx) in props.content" :content="data" :key="idx" @click="onRowClick(data)" />
+        <tbody class="table-body">
+            <base-table-row v-for="(data, idx) in props.content" :content="data" :key="idx" @click="onRowClick(data)" />
         </tbody>
     </table>
 </template>
@@ -20,7 +23,7 @@ import BaseTypography from '@/components/common/BaseTypography/BaseTypography.vu
 
 const props = defineProps<{
     content: T[]
-    heading: Record<string, string>
+    columns: Record<string, string>
     onRowClick: (data: T) => void
 }>()
 </script>
@@ -28,7 +31,43 @@ const props = defineProps<{
 <style scoped>
 .table {
     width: 100%;
+    height: 100%;
     border-spacing: 0 22px;
     border-collapse: separate;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-head,
+.table-body {
+    display: block;
+}
+
+.table-head {
+    position: sticky;
+    top: 5px;
+    background-color: white;
+    z-index: 1;
+}
+
+.table-body {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.table-head tr,
+.table-body tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.cell-heading {
+    padding-bottom: 5px;
+
+    &:last-child {
+        text-align: right;
+    }
+
 }
 </style>

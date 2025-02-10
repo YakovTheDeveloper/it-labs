@@ -34,11 +34,12 @@ const handleChange = (event: Event) => {
 }
 
 .input {
-    padding: 17px 19px;
+    padding: var(--padding-input);
     flex-grow: 1;
 
     &::placeholder {
         color: var(--color-input-placeholder);
+        font-size: 16px;
     }
 }
 </style>

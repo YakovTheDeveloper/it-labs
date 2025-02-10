@@ -1,5 +1,5 @@
 import type { Person } from "@/stores/usePersonStore"
-import { reactive, ref } from "vue"
+import { reactive } from "vue"
 
 export type ModalVariants = 'add-person' | 'edit-person'
 
